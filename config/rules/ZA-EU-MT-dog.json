@@ -1,0 +1,36 @@
+{
+  "id": "ZA-EU-MT-dog",
+  "origin": "ZA",
+  "destination": "EU",
+  "destinationCountry": "MT",
+  "petType": "dog",
+  "schemaVersion": "1.0.0",
+  "version": "1.0.0",
+  "lastVerified": "2026-05-02",
+  "officialSource": "https://agriculture.gov.mt/en/Pages/home.aspx",
+  "regulationReference": "EU Regulation 576/2013 + Maltese veterinary authority requirements",
+  "extendsRuleset": "ZA-EU-dog",
+  "notes": "Malta requires tapeworm (Echinococcus) treatment in addition to all standard EU requirements.",
+  "overrideTasks": [],
+  "additionalTasks": [
+    {
+      "id": "tapeworm_treatment",
+      "type": "action",
+      "title": "Tapeworm treatment (Echinococcus)",
+      "description": "Have a vet administer an approved tapeworm treatment (praziquantel or equivalent) between 1 and 5 days before arrival in Malta. Must be recorded on the EU health certificate.",
+      "why": "Malta has strict Echinococcus controls. This treatment is mandatory and must be noted by the vet on your health certificate.",
+      "category": "vaccination",
+      "documents": [
+        "Treatment recorded on EU Health Certificate by the issuing vet"
+      ],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 5,
+        "minDaysBefore": 1
+      },
+      "dependsOn": ["eu_health_certificate"],
+      "required": true,
+      "notes": "Praziquantel is the standard approved agent. Coordinate with your vet to have it recorded within the 10-day health cert window."
+    }
+  ]
+}

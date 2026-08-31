@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "1.0.0",
+  "timeline": {
+    "dueSoonThresholdDays": 7,
+    "overdueGraceDays": 0,
+    "monthsApproximateDays": 30
+  },
+  "notifications": {
+    "reminderDaysBefore": [90, 30, 14, 7, 3, 1]
+  },
+  "supportedRoutes": {
+    "origins": ["ZA"],
+    "destinations": ["EU"],
+    "petTypes": ["dog", "cat"],
+    "euCountries": [
+      { "code": "AT", "name": "Austria" },
+      { "code": "BE", "name": "Belgium" },
+      { "code": "BG", "name": "Bulgaria" },
+      { "code": "HR", "name": "Croatia" },
+      { "code": "CY", "name": "Cyprus" },
+      { "code": "CZ", "name": "Czech Republic" },
+      { "code": "DK", "name": "Denmark" },
+      { "code": "EE", "name": "Estonia" },
+      { "code": "FI", "name": "Finland", "hasOverride": true },
+      { "code": "FR", "name": "France" },
+      { "code": "DE", "name": "Germany" },
+      { "code": "GR", "name": "Greece" },
+      { "code": "HU", "name": "Hungary" },
+      { "code": "IE", "name": "Ireland" },
+      { "code": "IT", "name": "Italy" },
+      { "code": "LV", "name": "Latvia" },
+      { "code": "LT", "name": "Lithuania" },
+      { "code": "LU", "name": "Luxembourg" },
+      { "code": "MT", "name": "Malta", "hasOverride": true },
+      { "code": "NL", "name": "Netherlands" },
+      { "code": "PL", "name": "Poland" },
+      { "code": "PT", "name": "Portugal" },
+      { "code": "RO", "name": "Romania" },
+      { "code": "SK", "name": "Slovakia" },
+      { "code": "SI", "name": "Slovenia" },
+      { "code": "ES", "name": "Spain" },
+      { "code": "SE", "name": "Sweden" }
+    ]
+  },
+  "statusLabels": {
+    "completed": "Done",
+    "in_progress": "In progress",
+    "overdue": "Overdue",
+    "due_soon": "Due soon",
+    "in_window": "Ready to do",
+    "upcoming": "Upcoming",
+    "blocked": "Waiting on a previous step",
+    "milestone_reached": "Cleared",
+    "milestone_pending": "Waiting"
+  },
+  "statusColors": {
+    "completed": "green",
+    "in_progress": "purple",
+    "overdue": "red",
+    "due_soon": "orange",
+    "in_window": "blue",
+    "upcoming": "gray",
+    "blocked": "gray",
+    "milestone_reached": "green",
+    "milestone_pending": "gray"
+  },
+  "categoryLabels": {
+    "vaccination": "Vaccinations",
+    "health_cert": "Health Certificate",
+    "permit": "Permits",
+    "crate": "Crate",
+    "airline": "Airline",
+    "admin": "Admin",
+    "travel_day": "Travel Day"
+  },
+  "categoryOrder": [
+    "admin",
+    "vaccination",
+    "health_cert",
+    "permit",
+    "airline",
+    "crate",
+    "travel_day"
+  ],
+  "remoteConfig": {
+    "manifestUrl": "",
+    "fetchTimeoutMs": 5000,
+    "cacheMaxAgeHours": 24
+  }
+}
