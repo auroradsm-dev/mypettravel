@@ -1,0 +1,19 @@
+# Netlify configuration for My Pet Travel
+
+# Never cache index.html — ensures users always get the latest JS bundle
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+# Cache JS/CSS assets forever (they have content hashes in filenames)
+[[headers]]
+  for = "/_expo/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# SPA fallback — serve index.html for any path
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

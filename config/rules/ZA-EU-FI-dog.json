@@ -1,0 +1,36 @@
+{
+  "id": "ZA-EU-FI-dog",
+  "origin": "ZA",
+  "destination": "EU",
+  "destinationCountry": "FI",
+  "petType": "dog",
+  "schemaVersion": "1.0.0",
+  "version": "1.0.0",
+  "lastVerified": "2026-05-02",
+  "officialSource": "https://www.ruokavirasto.fi/en/animals/animal-health-and-diseases/import-and-export/",
+  "regulationReference": "EU Regulation 576/2013 + Finnish Food Authority requirements",
+  "extendsRuleset": "ZA-EU-dog",
+  "notes": "Finland requires tapeworm (Echinococcus) treatment in addition to all standard EU requirements. Treatment must be administered by a vet 1–5 days before arrival in Finland.",
+  "overrideTasks": [],
+  "additionalTasks": [
+    {
+      "id": "tapeworm_treatment",
+      "type": "action",
+      "title": "Tapeworm treatment (Echinococcus)",
+      "description": "Have a vet administer an approved tapeworm treatment (praziquantel or equivalent) between 1 and 5 days before arrival in Finland. Must be recorded on the EU health certificate.",
+      "why": "Finland has strict Echinococcus controls. This treatment is mandatory and must be noted by the vet on your health certificate. Failure to have it means your dog will be treated at the border at your cost, or refused entry.",
+      "category": "vaccination",
+      "documents": [
+        "Treatment recorded on EU Health Certificate by the issuing vet"
+      ],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 5,
+        "minDaysBefore": 1
+      },
+      "dependsOn": ["eu_health_certificate"],
+      "required": true,
+      "notes": "Treatment must be administered AFTER the health certificate is issued but BEFORE travel — coordinate with your vet to have it recorded as an addendum, or plan a second vet visit within the 10-day health cert window. Praziquantel is the standard approved agent."
+    }
+  ]
+}

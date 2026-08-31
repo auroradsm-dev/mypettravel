@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0.0",
+  "lastUpdated": "2026-05-02",
+  "rulesets": [
+    {
+      "id": "ZA-EU-dog",
+      "file": "ZA-EU-dog.json",
+      "version": "1.0.0",
+      "origin": "ZA",
+      "destination": "EU",
+      "petType": "dog",
+      "lastVerified": "2026-05-02",
+      "description": "Standard EU entry rules for dogs from South Africa (EU Regulation 576/2013)"
+    },
+    {
+      "id": "ZA-EU-FI-dog",
+      "file": "ZA-EU-FI-dog.json",
+      "version": "1.0.0",
+      "origin": "ZA",
+      "destination": "EU",
+      "destinationCountry": "FI",
+      "petType": "dog",
+      "lastVerified": "2026-05-02",
+      "description": "Finland override — adds mandatory tapeworm treatment",
+      "extendsRuleset": "ZA-EU-dog"
+    },
+    {
+      "id": "ZA-EU-MT-dog",
+      "file": "ZA-EU-MT-dog.json",
+      "version": "1.0.0",
+      "origin": "ZA",
+      "destination": "EU",
+      "destinationCountry": "MT",
+      "petType": "dog",
+      "lastVerified": "2026-05-02",
+      "description": "Malta override — adds mandatory tapeworm treatment",
+      "extendsRuleset": "ZA-EU-dog"
+    }
+  ]
+}

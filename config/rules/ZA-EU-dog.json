@@ -1,0 +1,443 @@
+{
+  "id": "ZA-EU-dog",
+  "origin": "ZA",
+  "destination": "EU",
+  "petType": "dog",
+  "schemaVersion": "1.0.0",
+  "version": "1.0.0",
+  "lastVerified": "2026-05-02",
+  "officialSource": "https://ec.europa.eu/food/animals/movement-pets_en",
+  "regulationReference": "EU Regulation 576/2013 + Commission Implementing Regulation 577/2013",
+  "notes": "South Africa is an unlisted Part 2 country under EU Regulation 576/2013. The titer test and 3-month waiting period are mandatory with no exceptions. Some EU member states (Finland, Malta, Ireland) have additional requirements — check destination-country override rulesets. Valid for non-commercial movement of up to 5 dogs.",
+  "minimumLeadTimeWarning": {
+    "days": 150,
+    "message": "Relocating a dog from South Africa to the EU takes at least 5 months minimum due to mandatory vaccination and waiting periods. Start now to avoid missing your travel date."
+  },
+  "tasks": [
+    {
+      "id": "microchip",
+      "type": "action",
+      "title": "Microchip your dog",
+      "description": "Have an ISO 11784/11785 compliant microchip implanted by a vet. Must happen before or at the same visit as the rabies vaccination.",
+      "why": "The EU requires microchip identification for all entering pets. If vaccinated before chipping, the vaccine doesn't count — you'd have to start over.",
+      "category": "admin",
+      "documents": [
+        "Vet record showing microchip number, implant date, and vet details"
+      ],
+      "timing": {
+        "type": "anytime"
+      },
+      "dependsOn": [],
+      "required": true,
+      "notes": "If your dog is already microchipped, confirm it's ISO 11784/11785 compliant (15-digit code). The chip number must appear on every subsequent document exactly as recorded here."
+    },
+    {
+      "id": "microchip_registration",
+      "type": "action",
+      "title": "Register microchip in a pet database",
+      "description": "Register the chip number in a national or international registry (e.g. South African Pet Register, PetTraQ).",
+      "why": "Not an EU entry requirement, but provides proof of ownership and is useful if your dog is lost in transit or at destination.",
+      "category": "admin",
+      "documents": [
+        "Registration confirmation email or certificate"
+      ],
+      "timing": {
+        "type": "after_task",
+        "taskId": "microchip",
+        "minDays": 0
+      },
+      "dependsOn": ["microchip"],
+      "required": false,
+      "notes": "Do this the same day as the microchip appointment."
+    },
+    {
+      "id": "rabies_vaccination",
+      "type": "action",
+      "title": "Rabies vaccination",
+      "description": "Administer a valid rabies vaccination after microchip implantation. Dog must be at least 12 weeks old at time of vaccination.",
+      "why": "Required for EU entry. Must be given after microchipping. Vaccine brand, batch number, date, and chip number must all appear on the vaccination record.",
+      "category": "vaccination",
+      "documents": [
+        "Vaccination record showing: vaccine brand, batch number, date administered, microchip number, vet details"
+      ],
+      "timing": {
+        "type": "after_task",
+        "taskId": "microchip",
+        "minDays": 0
+      },
+      "dependsOn": ["microchip"],
+      "required": true,
+      "notes": "Ask your vet to attach the vaccine batch sticker to the record — this is required on the EU health certificate. Use an inactivated or recombinant vaccine (most standard rabies vaccines qualify). Keep vaccinations up to date — if the rabies vaccine lapses, the titer test becomes invalid."
+    },
+    {
+      "id": "titer_test_blood_sample",
+      "type": "action",
+      "title": "Rabies antibody titer test — blood draw",
+      "description": "Have a blood sample taken by a vet and sent to an EU-approved laboratory for a rabies antibody titration test (FAVN or RFFIT method). The sample must be taken at least 30 days after the rabies vaccination.",
+      "why": "South Africa is an unlisted country under EU Regulation 576/2013. A passing titer test result (≥0.5 IU/ml) is a hard entry requirement. The 3-month EU waiting period starts from this blood sample date.",
+      "category": "vaccination",
+      "documents": [
+        "Lab submission form",
+        "Vet record of blood draw date and microchip number"
+      ],
+      "timing": {
+        "type": "after_task",
+        "taskId": "rabies_vaccination",
+        "minDays": 30
+      },
+      "dependsOn": ["rabies_vaccination"],
+      "required": true,
+      "notes": "Use an EU-approved laboratory — results from non-approved labs are not accepted. In South Africa: Onderstepoort Veterinary Genetics Laboratory (verify current EU approval status before submitting). Results typically take 2–4 weeks. Keep the original result document — it must be presented at EU entry."
+    },
+    {
+      "id": "titer_test_result",
+      "type": "milestone",
+      "title": "Titer test result: ≥0.5 IU/ml",
+      "description": "Receive passing lab result confirming rabies antibody level is at or above 0.5 IU/ml.",
+      "why": "Entry is blocked without a passing result. If the result fails, you must revaccinate, wait 30 days, and retest — the 3-month clock resets from the new blood sample date.",
+      "category": "vaccination",
+      "documents": [
+        "Official lab result certificate showing: IU/ml value, lab accreditation, sample date, microchip number"
+      ],
+      "timing": {
+        "type": "after_task",
+        "taskId": "titer_test_blood_sample",
+        "minDays": 14,
+        "typicalDays": 21
+      },
+      "dependsOn": ["titer_test_blood_sample"],
+      "required": true,
+      "failureInstruction": "If result is below 0.5 IU/ml: revaccinate, wait 30 days, retest. Your travel date will need to move — update it in the app to recalculate your timeline."
+    },
+    {
+      "id": "three_month_clearance",
+      "type": "milestone",
+      "title": "3-month EU waiting period",
+      "description": "EU regulations require travel to occur at least 3 months (90 days) after the date the successful blood sample was taken. This is automatic — no action needed, just wait.",
+      "why": "This is a fixed EU regulatory requirement for dogs from unlisted countries (EU Regulation 576/2013, Annex II Part 2). There are no exceptions, waivers, or workarounds.",
+      "category": "vaccination",
+      "documents": [],
+      "timing": {
+        "type": "after_task",
+        "taskId": "titer_test_blood_sample",
+        "minDays": 90,
+        "note": "90 days is used as the standard approximation of 3 calendar months. Some officials interpret this as calendar months — verify with your destination country's border authority if cutting it close."
+      },
+      "dependsOn": ["titer_test_result"],
+      "required": true,
+      "notes": "This is the critical bottleneck. If you haven't started yet and your travel date is less than 5 months away, you need to act immediately or move your travel date."
+    },
+    {
+      "id": "private_vet_appointment",
+      "type": "action",
+      "title": "Private vet appointment — health check & dewormer",
+      "description": "Book and attend a private vet appointment for a health examination and dewormer treatment. Your accredited private vet will also complete the EU Health Certificate at this appointment. Bring all prior documentation.",
+      "why": "The EU Health Certificate requires a physical health exam confirming your dog is fit to travel. EU regulations also require tapeworm (Echinococcus) treatment within 24–120 hours before EU entry. Your accredited vet completes both the exam and the health certificate at this appointment — book well in advance as slots are limited.",
+      "category": "health_cert",
+      "documents": [
+        "Appointment confirmation from vet",
+        "Health examination record",
+        "Dewormer treatment record (product name, dose, date, vet details)",
+        "Completed EU Health Certificate (Annex IV format) — issued at this appointment"
+      ],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 10,
+        "minDaysBefore": 1
+      },
+      "dependsOn": ["three_month_clearance"],
+      "required": true,
+      "notes": "Book 4–6 weeks in advance — accredited vets have limited slots and you cannot afford to miss this window. Bring all prior documents: microchip record, vaccination certificate with batch sticker, and titer test result (original). The dewormer must contain praziquantel or epsiprantel and must be administered by the vet (not at home). Timing is critical: treatment must occur no more than 120 hours (5 days) and no less than 24 hours before EU entry."
+    },
+    {
+      "id": "eu_health_certificate",
+      "type": "action",
+      "title": "EU Health Certificate (Annex IV) — issued",
+      "description": "Confirm the EU Health Certificate has been completed and issued by your accredited vet at the private vet appointment. The certificate must be issued within 10 days before your entry date into the EU.",
+      "why": "This is the primary document checked at EU entry. Border authorities will not accept a certificate issued more than 10 days before arrival.",
+      "category": "health_cert",
+      "documents": [
+        "Completed EU Health Certificate (Annex IV format)",
+        "Microchip record",
+        "Rabies vaccination record with batch sticker",
+        "Titer test result (original)"
+      ],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 10,
+        "minDaysBefore": 1
+      },
+      "dependsOn": ["private_vet_appointment"],
+      "required": true,
+      "notes": "Do not get this too early — it becomes invalid if issued more than 10 days before EU entry. The certificate is completed by the accredited vet at your private vet appointment."
+    },
+    {
+      "id": "state_vet_endorsement",
+      "type": "action",
+      "title": "State Veterinarian endorsement (DALRRD)",
+      "description": "Have the completed health certificate endorsed by the State Veterinarian at a DALRRD (Department of Agriculture, Land Reform and Rural Development) office.",
+      "why": "The EU requires health certificates from Part 2 countries to be signed by an 'official veterinarian'. In South Africa this means State Vet endorsement after the private vet completes the certificate.",
+      "category": "health_cert",
+      "documents": [
+        "Completed health certificate (from private vet)",
+        "All supporting documents (microchip, vaccination, titer test)"
+      ],
+      "timing": {
+        "type": "after_task",
+        "taskId": "eu_health_certificate",
+        "minDays": 0
+      },
+      "dependsOn": ["eu_health_certificate"],
+      "required": true,
+      "notes": "Allow 1–3 business days. Many offices require appointments — call ahead. Do this immediately after the health certificate is issued: you have a 10-day window and State Vet offices have limited hours. Bring originals and copies of everything."
+    },
+    {
+      "id": "import_permit_check",
+      "type": "action",
+      "title": "Check if destination country requires import permit",
+      "description": "Verify with the embassy or official government website of your specific EU destination country whether an import permit is required for dogs from South Africa.",
+      "why": "Most EU countries do not require an import permit for non-commercial movement of ≤5 dogs. However, some countries have additional requirements. Verify early to avoid surprises.",
+      "category": "permit",
+      "documents": [],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 180
+      },
+      "dependsOn": [],
+      "required": true,
+      "notes": "For Netherlands: no import permit required for non-commercial movement. Check NVWA (Netherlands Food and Consumer Product Safety Authority) or equivalent body for your destination country."
+    },
+    {
+      "id": "aia_permit",
+      "type": "action",
+      "title": "Apply for AIA permit (DALRRD)",
+      "description": "Apply to DALRRD (Department of Agriculture, Land Reform and Rural Development) via email for the Animal Import Authorisation (AIA) permit required by the EU. Once approved, the permit is emailed to you — then request the original to be couriered to your address.",
+      "why": "The EU requires an AIA permit issued by DALRRD before your dog can be exported from South Africa. You need the original physical document for travel — allow enough time for the courier delivery before your departure.",
+      "category": "permit",
+      "documents": [
+        "AIA permit (emailed copy for reference)",
+        "AIA permit (original — couriered, required for travel)"
+      ],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 90
+      },
+      "dependsOn": [],
+      "required": true,
+      "notes": "Apply well in advance — processing time varies. Email DALRRD at the relevant provincial office. Once you receive the email confirmation, immediately request the original be couriered so it arrives before your travel date. Keep the emailed copy as a backup."
+    },
+    {
+      "id": "transfer_to_airport",
+      "type": "action",
+      "title": "Arrange transfer to departure airport",
+      "description": "Book a pet-friendly transfer from your home to the departure airport. Confirm the vehicle can safely accommodate your dog's crate and that the driver is aware a large animal crate will be loaded.",
+      "why": "Standard taxis and rideshares may refuse large animal crates or not have space. Arriving stressed or late because of transport issues before a long flight is avoidable — sort this early.",
+      "category": "admin",
+      "documents": [
+        "Transfer booking confirmation"
+      ],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 30
+      },
+      "dependsOn": [],
+      "required": true,
+      "notes": "Confirm the booking 48 hours before travel. Allow extra time — you need to arrive at the airport 3–4 hours before departure for live animal check-in."
+    },
+    {
+      "id": "transfer_from_airport",
+      "type": "action",
+      "title": "Arrange transfer from arrival airport",
+      "description": "Book a pet-friendly transfer from your EU arrival airport to your destination. Confirm the vehicle can accommodate your dog's crate and that pets are permitted.",
+      "why": "Your dog will be tired and stressed after a long flight. Having a confirmed, stress-free ride ready removes one more thing to worry about on arrival day.",
+      "category": "admin",
+      "documents": [
+        "Transfer booking confirmation"
+      ],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 30
+      },
+      "dependsOn": [],
+      "required": true,
+      "notes": "Allow extra time after landing — live animal collection from cargo can take 30–60 minutes after your flight lands. Don't book a transfer that arrives before you'll realistically be ready."
+    },
+    {
+      "id": "airline_avih_booking",
+      "type": "action",
+      "title": "Book AVIH (dog in hold) with airline",
+      "description": "Contact your airline to add your dog as AVIH (Accompanied Baggage — Animal in Hold) to your booking. Do this as early as possible.",
+      "why": "Airlines strictly limit the number of live animals per flight. On popular ZA–EU routes, AVIH spots sell out months in advance. A confirmed AVIH booking is required before check-in.",
+      "category": "airline",
+      "documents": [
+        "AVIH booking confirmation with your booking reference"
+      ],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 270,
+        "minDaysBefore": 7
+      },
+      "dependsOn": [],
+      "required": true,
+      "notes": "Book when you book your own ticket. Confirm in writing that AVIH is attached to your booking reference — verbal confirmations have been lost. Call to reconfirm 72 hours before travel.",
+      "conditions": {
+        "petSize": ["hold", "cargo"]
+      }
+    },
+    {
+      "id": "airline_requirements_check",
+      "type": "action",
+      "title": "Get airline-specific pet requirements",
+      "description": "Contact your airline or check their official pet policy for: accepted crate specifications, documentation requirements at check-in, check-in timing, and any breed restrictions.",
+      "why": "Each airline has variations on IATA requirements. Non-compliance at check-in means your dog cannot board.",
+      "category": "airline",
+      "documents": [
+        "Written confirmation of airline pet policy (screenshot or email)"
+      ],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 180
+      },
+      "dependsOn": ["airline_avih_booking"],
+      "required": true,
+      "notes": "Ask specifically about: bolt requirements (metal vs plastic wing nuts), crate label requirements, food/water requirements, check-in timing for live animals (typically 3–4 hours before departure)."
+    },
+    {
+      "id": "crate_purchase",
+      "type": "action",
+      "title": "Purchase IATA-compliant travel crate",
+      "description": "Buy an IATA Live Animal Regulations-compliant hard-sided crate in the correct size for your dog.",
+      "why": "Airlines will refuse to board a dog in a non-compliant crate. The crate must allow your dog to stand at full height, turn around completely, and lie down naturally.",
+      "category": "crate",
+      "documents": [
+        "Purchase receipt (for insurance purposes)"
+      ],
+      "timing": {
+        "type": "anytime"
+      },
+      "dependsOn": [],
+      "required": true,
+      "notes": "Size guide: internal length = dog's length (nose to tail base) + 10cm. Internal height = standing shoulder height + 10cm. Buy early — your dog needs weeks to acclimatize to it. Brands: Vari Kennel, Ruff Tuff, Sky Kennel are widely accepted."
+    },
+    {
+      "id": "crate_acclimatization",
+      "type": "action",
+      "title": "Crate training and acclimatization",
+      "description": "Gradually introduce your dog to the crate over several weeks so they are comfortable spending extended time inside.",
+      "why": "A stressed dog in an unfamiliar crate during a long flight is a welfare risk. Acclimatization significantly reduces anxiety.",
+      "category": "crate",
+      "documents": [],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 60
+      },
+      "dependsOn": ["crate_purchase"],
+      "required": false,
+      "notes": "Start with short sessions with the door open, feeding meals inside, then short closed periods. Build up to overnight stays. The goal is the dog choosing to go in voluntarily."
+    },
+    {
+      "id": "crate_compliance_prep",
+      "type": "action",
+      "title": "Prepare crate for compliance",
+      "description": "Verify and prepare crate against IATA and airline-specific requirements: replace plastic wing nuts with metal bolts, attach ventilation covers if required, fit internal water/food bowls, add absorbent lining, attach required labels.",
+      "why": "A crate rejected at check-in means your dog cannot travel. Airlines have refused dogs for plastic fasteners, missing labels, or wrong bowl setup.",
+      "category": "crate",
+      "documents": [],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 14
+      },
+      "dependsOn": ["crate_purchase", "airline_requirements_check"],
+      "required": true,
+      "notes": "Required labels: 'LIVE ANIMAL' on top and at least one side (large, visible), directional arrows showing upright orientation on all 4 sides. Attach a small bag of food to the outside for handlers. Freeze a water dish the night before — ice melts slowly and prevents spills."
+    },
+    {
+      "id": "travel_day_checklist",
+      "type": "action",
+      "title": "Travel day — complete pre-departure checklist",
+      "description": "On the morning of travel, work through the full pre-departure checklist: freeze the water bowl the night before, withhold food 4 hours before, place familiar item in crate, attach documents to crate, confirm AVIH booking, arrive 3–4 hours early for live animal check-in.",
+      "why": "Travel day is high-pressure. Having a clear checklist reduces the chance of forgetting something critical at the last moment.",
+      "category": "travel_day",
+      "documents": [
+        "Document pack (attached to crate and kept on your person)",
+        "AVIH booking confirmation",
+        "Vet contact number (in case of questions at check-in)"
+      ],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 1,
+        "minDaysBefore": 0
+      },
+      "dependsOn": ["document_pack", "crate_compliance_prep"],
+      "required": true,
+      "notes": "Night before: freeze water dish, prepare crate with familiar blanket/toy, lay out all documents.\n\nMorning of: withhold food 4 hours before departure. Walk your dog before leaving. Arrive 3–4 hours before departure. Check-in sequence: check in yourself first, then proceed to oversized/live animal desk. Hand over dog calmly — they sense your anxiety."
+    },
+    {
+      "id": "certified_copies",
+      "type": "action",
+      "title": "Get certified copies of all documents",
+      "description": "Have a commissioner of oaths certify copies of your key documents: EU Health Certificate, rabies vaccination record, titer test result, microchip record, and your passport. Many EU border control and airline staff require certified copies rather than plain photocopies.",
+      "why": "Uncertified copies may be rejected at check-in or by EU border authorities. Getting certified copies in advance avoids last-minute scrambling.",
+      "category": "admin",
+      "documents": [
+        "Certified copy of EU Health Certificate",
+        "Certified copy of rabies vaccination record",
+        "Certified copy of titer test result",
+        "Certified copy of microchip documentation",
+        "Certified copy of your passport photo page"
+      ],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 5,
+        "minDaysBefore": 1
+      },
+      "dependsOn": ["state_vet_endorsement"],
+      "required": true,
+      "notes": "A commissioner of oaths (available at police stations, law firms, and many post offices) must sign and stamp each copy. Allow at least 2 working days. Make 2 certified sets — one for the crate pouch, one to carry on your person."
+    },
+    {
+      "id": "airline_invoice_avih",
+      "type": "action",
+      "title": "Get airline AVIH invoice and print confirmation",
+      "description": "Request a formal invoice from the airline confirming the AVIH (Animal in Hold) booking. Print both the invoice and booking confirmation. Some airlines issue this separately from the standard flight booking — you may need to call the cargo/special services desk.",
+      "why": "Check-in staff and cargo handlers require printed proof of the AVIH booking. A digital booking reference is often not accepted at the live animal check-in desk.",
+      "category": "airline",
+      "documents": [
+        "Printed AVIH booking confirmation (with flight number, date, and pet details)",
+        "Airline AVIH invoice (paid)"
+      ],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 7,
+        "minDaysBefore": 1
+      },
+      "dependsOn": ["airline_avih_booking"],
+      "required": true,
+      "notes": "Call the airline's cargo or special services line — not the standard booking line — to request the formal invoice. Some airlines (e.g. Emirates SkyCargo, Lufthansa) have separate cargo booking systems. Confirm the AVIH fee has been paid and ask for receipt. Print at least 3 copies."
+    },
+    {
+      "id": "document_pack",
+      "type": "action",
+      "title": "Assemble complete document pack",
+      "description": "Compile all travel documents into one organised pack: originals plus two copies of each.",
+      "why": "Check-in staff, cargo handlers, and EU border authorities will all check documents. Missing a single document can block boarding or result in quarantine at destination.",
+      "category": "health_cert",
+      "documents": [
+        "EU Health Certificate — state vet endorsed (original + 2 copies)",
+        "Rabies vaccination record (original + 2 copies)",
+        "Titer test result (original + 2 copies)",
+        "Microchip documentation (copy)",
+        "AVIH booking confirmation (copy)",
+        "Your own passport copy"
+      ],
+      "timing": {
+        "type": "before_travel",
+        "maxDaysBefore": 2,
+        "minDaysBefore": 1
+      },
+      "dependsOn": ["state_vet_endorsement", "airline_avih_booking", "certified_copies", "airline_invoice_avih"],
+      "required": true,
+      "notes": "Keep one full set with you at all times during travel. Attach a second set to the document pouch on the crate. Never pack originals in checked luggage."
+    }
+  ]
+}
