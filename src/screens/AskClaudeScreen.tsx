@@ -4,13 +4,12 @@ import {
   TouchableOpacity, TextInput, ActivityIndicator,
 } from 'react-native'
 import { useAppStore } from '../store/useAppStore'
+import { askClaude, ASK_URL } from '../lib/askClaude'
 import { colors, radius, shadow } from '../design/tokens'
 import { PageBackground } from '../components/Illustrations'
 
 type Message = { role: 'user' | 'assistant'; content: string }
 
-// API key baked in via .env.local → EXPO_PUBLIC_ANTHROPIC_KEY
-const API_KEY = process.env.EXPO_PUBLIC_ANTHROPIC_KEY ?? ''
 
 function buildSystemPrompt(petName: string, origin: string, dest: string, travelDate: string): string {
   return `You are a warm, knowledgeable pet relocation assistant for My Pet Travel.
@@ -27,31 +26,6 @@ Help with:
 - Any other pet relocation questions
 
 Be warm, practical, and concise. For local vet searches, suggest what to search and which bodies to contact (SAVC-registered vets, state vets at DALRRD offices) rather than specific listings you can't verify.`
-}
-
-async function callClaude(messages: Message[], system: string): Promise<string> {
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': API_KEY,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true',
-    },
-    body: JSON.stringify({
-      model: 'claude-haiku-4-5',
-      max_tokens: 1024,
-      system,
-      messages: messages.map((m) => ({ role: m.role, content: m.content })),
-    }),
-  })
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}))
-    throw new Error((err as any)?.error?.message ?? `API error ${res.status}`)
-  }
-  const data = await res.json()
-  return data.content?.[0]?.text ?? 'No response received.'
 }
 
 const SUGGESTIONS = [
@@ -96,7 +70,7 @@ export default function AskClaudeScreen() {
     setError('')
 
     try {
-      const reply = await callClaude(next, system)
+      const reply = await askClaude(next, system)
       setMessages((prev) => [...prev, { role: 'assistant', content: reply }])
     } catch (e: any) {
       setError(e.message ?? 'Something went wrong.')
@@ -106,7 +80,7 @@ export default function AskClaudeScreen() {
   }
 
   // No API key configured
-  if (!API_KEY || API_KEY.includes('REPLACE_WITH')) {
+  if (!ASK_URL) {
     return (
       <View style={styles.container}>
         <PageBackground variant="face" size={280} opacity={0.28} style={{ bottom: 0, right: -40 }} />
@@ -114,14 +88,14 @@ export default function AskClaudeScreen() {
           <Text style={styles.noKeyIcon}>✦</Text>
           <Text style={styles.noKeyTitle}>Ask Claude</Text>
           <Text style={styles.noKeyBody}>
-            To enable the AI assistant, add your Anthropic API key to the{' '}
+            To enable the AI assistant, add the Worker URL to the{' '}
             <Text style={styles.noKeyCode}>.env.local</Text> file in the project root:
           </Text>
           <View style={styles.codeBlock}>
-            <Text style={styles.codeText}>EXPO_PUBLIC_ANTHROPIC_KEY=sk-ant-...</Text>
+            <Text style={styles.codeText}>EXPO_PUBLIC_ASK_URL=https://mypetravel-api.YOURNAME.workers.dev</Text>
           </View>
           <Text style={styles.noKeyHint}>
-            Get a free key at console.anthropic.com → API Keys, then restart the dev server.
+            Deploy the Worker in the worker/ folder first (see worker/README.md), then restart the dev server.
           </Text>
         </View>
       </View>
