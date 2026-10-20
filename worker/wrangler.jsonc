@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mypetravel-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": true,
+
+  // Every 2 days at 06:00 UTC: ping Supabase so the free project never pauses.
+  "triggers": { "crons": ["0 6 */2 * *"] },
+
+  // ANTHROPIC_API_KEY and SUPABASE_ANON_KEY are set as secrets, see worker/README.md.
+  "vars": {
+    "SUPABASE_URL": "https://otbxxirwvmvmjsvmdriu.supabase.co",
+    "ALLOWED_ORIGINS": "https://mypetravel.com,https://www.mypetravel.com,http://localhost:8081"
+  },
+
+  "observability": { "enabled": true }
+}
