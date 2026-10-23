@@ -4,42 +4,10 @@ import {
   ScrollView, Animated, ActivityIndicator, KeyboardAvoidingView,
 } from 'react-native'
 import { useAppStore } from '../store/useAppStore'
+import { askClaude, askClaudeConfigured, tripContext, type ChatMessage } from '../lib/askClaude'
 import { colors, radius, shadow } from '../design/tokens'
 
-type Message = { role: 'user' | 'assistant'; content: string }
-
-const API_KEY = process.env.EXPO_PUBLIC_ANTHROPIC_KEY ?? ''
-
-function buildSystemPrompt(petName: string, origin: string, dest: string, travelDate: string): string {
-  return `You are a warm, knowledgeable pet relocation assistant for My Pet Travel.
-The user's pet is named ${petName}. They are relocating from ${origin} to ${dest}, travelling on ${travelDate}.
-Help with: finding accredited/state vets, EU pet import regulations, airline AVIH policies, packing lists, keeping pets calm, document requirements and timing.
-Be warm, practical, and concise. Keep answers brief and focused — this is a chat widget.`
-}
-
-async function callClaude(messages: Message[], system: string): Promise<string> {
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': API_KEY,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true',
-    },
-    body: JSON.stringify({
-      model: 'claude-haiku-4-5',
-      max_tokens: 600,
-      system,
-      messages: messages.map((m) => ({ role: m.role, content: m.content })),
-    }),
-  })
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}))
-    throw new Error((err as any)?.error?.message ?? `API error ${res.status}`)
-  }
-  const data = await res.json()
-  return data.content?.[0]?.text ?? 'No response.'
-}
+type Message = ChatMessage
 
 const SUGGESTIONS = [
   'Where do I find a state vet?',
@@ -75,14 +43,7 @@ export default function FloatingAskClaude({ visible = true }: Props) {
 
   if (!visible) return null
 
-  const system = onboarding
-    ? buildSystemPrompt(
-        onboarding.petName,
-        onboarding.origin,
-        onboarding.destinationCountry ?? onboarding.destination,
-        new Date(onboarding.travelDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
-      )
-    : buildSystemPrompt('your pet', 'South Africa', 'the EU', 'your travel date')
+  const context = tripContext(onboarding)
 
   async function handleSend() {
     const text = input.trim()
@@ -93,7 +54,7 @@ export default function FloatingAskClaude({ visible = true }: Props) {
     setLoading(true)
     setError('')
     try {
-      const reply = await callClaude(next, system)
+      const reply = await askClaude(next, context, 'widget')
       setMessages((prev) => [...prev, { role: 'assistant', content: reply }])
     } catch (e: any) {
       setError(e.message ?? 'Something went wrong.')

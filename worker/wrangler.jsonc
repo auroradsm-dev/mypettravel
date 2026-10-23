@@ -1,0 +1,14 @@
+{
+  // Server side for Mypetravel: holds the Anthropic key and keeps Supabase awake.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mypetravel-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-09-01",
+  "vars": {
+    // Public values only. The Anthropic key is a secret: wrangler secret put ANTHROPIC_API_KEY
+    "SUPABASE_URL": "https://otbxxirwvmvmjsvmdriu.supabase.co",
+    "ALLOWED_ORIGINS": "https://mypetravel.com,https://www.mypetravel.com,http://localhost:8081,http://localhost:19006"
+  },
+  // Free tier Supabase projects pause after a week without traffic: ping it every day at 06:17 UTC.
+  "triggers": { "crons": ["17 6 * * *"] }
+}

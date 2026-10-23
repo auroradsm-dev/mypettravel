@@ -22,7 +22,7 @@ No lint or test scripts are configured.
 - **Expo Router 6** for file-based routing under `app/`
 - **Zustand 5** for global state with localStorage persistence
 - **Supabase** for auth (email + Google OAuth) and user data sync
-- **Anthropic SDK** for the in-app "Ask Claude" AI chat feature
+- **Ask Claude** AI chat, served through a Cloudflare Worker in `worker/` (holds the Anthropic key, checks the Supabase session, builds the system prompt)
 - **TypeScript strict mode** with path alias `@/*` → `./src/*`
 
 ### Navigation
@@ -52,7 +52,9 @@ Type definitions for the rules engine live in `src/types/rules.ts`.
 `src/design/tokens.ts` — centralized colors, border-radius, and shadow values. Use these instead of hardcoded values in StyleSheets.
 
 ### Environment Variables
-Required in `.env.local`:
-- `EXPO_PUBLIC_ANTHROPIC_KEY` — Anthropic API key (used in Ask Claude screen)
+Required in `.env.local` (see `.env.example`). Anything prefixed `EXPO_PUBLIC_` is bundled into the client, so never put secrets there:
 - `EXPO_PUBLIC_SUPABASE_URL` — Supabase project URL
 - `EXPO_PUBLIC_SUPABASE_ANON_KEY` — Supabase anon key
+- `EXPO_PUBLIC_ASK_CLAUDE_URL` — address of the deployed Worker
+
+The Anthropic key is a Worker secret (`wrangler secret put ANTHROPIC_API_KEY`), see `worker/README.md`.
