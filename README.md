@@ -4,7 +4,7 @@ An assistant for moving abroad with a pet. Tell it where you're going, when, and
 
 Built after relocating internationally with my dog, Jax. The rules are real: the first route covered is South Africa to the EU, one of the strictest, with a mandatory rabies titer test and a 3 month waiting period that catches people out every year.
 
-> **Status:** being revived. The live site at mypetravel.com is coming back once the new Ask Claude backend is deployed.
+**Try it:** [mypetravel.com](https://mypetravel.com)
 
 ## What it does
 

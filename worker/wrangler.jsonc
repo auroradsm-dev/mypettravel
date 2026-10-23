@@ -3,6 +3,9 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "mypetravel-api",
   "main": "src/index.ts",
+  // Served on the workers.dev address; no per version preview links.
+  "workers_dev": true,
+  "preview_urls": false,
   "compatibility_date": "2025-09-01",
   "vars": {
     // Public values only. The Anthropic key is a secret: wrangler secret put ANTHROPIC_API_KEY
