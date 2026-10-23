@@ -6,6 +6,8 @@ Built after relocating internationally with my dog, Jax. The rules are real: the
 
 **Try it:** [mypetravel.com](https://mypetravel.com)
 
+**Product thinking:** the problem, decisions and trade offs are in [PRODUCT.md](PRODUCT.md).
+
 ## What it does
 
 * **A dated plan, not a checklist.** Each task has a timing rule ("10 to 1 days before travel", "30 days after the rabies vaccine", "before the titer test"). The app turns those rules into real dates from your travel date and shows what's due now, what's coming, what's blocked and what's overdue.
