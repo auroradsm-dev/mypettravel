@@ -35,7 +35,9 @@ function resolveWindow(
         windowStart: timing.minDaysBefore != null
           ? addDays(travelDate, -timing.maxDaysBefore)
           : null,
-        windowEnd: addDays(travelDate, -timing.maxDaysBefore),
+        // A window (e.g. 10 to 1 days before) closes at minDaysBefore.
+        // Without a minimum, maxDaysBefore is the deadline.
+        windowEnd: addDays(travelDate, -(timing.minDaysBefore ?? timing.maxDaysBefore)),
       }
 
     case 'after_task': {
