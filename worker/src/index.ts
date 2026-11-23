@@ -5,7 +5,7 @@
  *              The Anthropic key never leaves this Worker, the system prompt is
  *              built here, and model, token budget and input sizes are fixed
  *              server side, so the endpoint can't be used as a general LLM proxy.
- * cron         Every hour: keeps the free Supabase project awake, restores it
+ * cron         Every 6 hours: keeps the free Supabase project awake, restores it
  *              automatically if it pauses anyway, and pushes an alert to my phone.
  */
 
@@ -96,7 +96,7 @@ export default {
 // heartbeat table remembers when the last successful ping happened.
 // ---------------------------------------------------------------------------
 
-const OUTAGE_AFTER_MS = 3 * 60 * 60 * 1000 // a gap this long between pings means it was down
+const OUTAGE_AFTER_MS = 9 * 60 * 60 * 1000 // pings run every 6 hours: a gap over 9 hours means it was down
 
 async function keepSupabaseAlive(env: Env): Promise<void> {
   // 1. Prevent: write a timestamp. Real database activity, every hour.

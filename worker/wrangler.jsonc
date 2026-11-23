@@ -13,6 +13,6 @@
     "ALLOWED_ORIGINS": "https://mypetravel.com,https://www.mypetravel.com,http://localhost:8081,http://localhost:19006"
   },
   // Free tier Supabase projects pause after a week without enough activity:
-  // write a heartbeat every hour at :17, and restore the project if it paused anyway.
-  "triggers": { "crons": ["17 * * * *"] }
+  // write a heartbeat every 6 hours (00:17, 06:17, 12:17, 18:17 UTC) and restore the project if it paused anyway.
+  "triggers": { "crons": ["17 */6 * * *"] }
 }
