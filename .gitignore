@@ -43,3 +43,6 @@ yarn-error.*
 # Cloudflare Worker local secrets
 .dev.vars
 .wrangler/
+
+# Local Netlify folder
+.netlify

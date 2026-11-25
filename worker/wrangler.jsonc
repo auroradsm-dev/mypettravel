@@ -14,5 +14,6 @@
   },
   // Free tier Supabase projects pause after a week without enough activity:
   // write a heartbeat every 6 hours (00:17, 06:17, 12:17, 18:17 UTC) and restore the project if it paused anyway.
+  "observability": { "enabled": true },
   "triggers": { "crons": ["17 */6 * * *"] }
 }
